@@ -172,6 +172,23 @@ check_docker_compose() {
     fi
 }
 
+# 下载 docker-compose.yml 文件
+download_docker_compose_file() {
+    local current_dir=$(pwd)
+    local compose_file="$current_dir/docker-compose.yml"
+    
+    log_info "下载 docker-compose.yml 文件..."
+    
+    if curl -fsSL https://raw.githubusercontent.com/xapanyun/n8n_install/main/docker-compose.yml -o "$compose_file"; then
+        log_success "docker-compose.yml 下载成功: $compose_file"
+        echo "$compose_file"
+        return 0
+    else
+        log_error "docker-compose.yml 下载失败"
+        return 1
+    fi
+}
+
 # 查找 docker-compose.yml 文件
 find_docker_compose_file() {
     # 首先检查当前目录
@@ -366,7 +383,13 @@ main() {
             USE_COMPOSE=true
             log_success "找到 docker-compose.yml: $COMPOSE_FILE"
         else
-            log_warning "未找到 docker-compose.yml 文件，将使用 docker run"
+            # 尝试下载 docker-compose.yml 文件
+            log_info "未找到 docker-compose.yml 文件，尝试从 GitHub 下载..."
+            if COMPOSE_FILE=$(download_docker_compose_file); then
+                USE_COMPOSE=true
+            else
+                log_warning "下载失败，将使用 docker run"
+            fi
         fi
     fi
     
