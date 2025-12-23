@@ -71,6 +71,60 @@ check_docker() {
     fi
 }
 
+# 修复 CentOS 源地址（官方已停止维护，切换到 vault 源）
+fix_centos_repo() {
+    log_info "检测 CentOS 版本并修复源地址..."
+    
+    # 检测 CentOS 版本
+    if [ "$OS" != "centos" ]; then
+        return 0
+    fi
+    
+    local centos_version=$(echo $OS_VERSION | cut -d. -f1)
+    
+    # CentOS 8 (包括 8-stream)
+    if [ "$centos_version" = "8" ]; then
+        log_warning "检测到 CentOS 8，官方已停止维护，切换到 vault 源..."
+        
+        # 备份原有源
+        if [ ! -d /etc/yum.repos.d/backup ]; then
+            mkdir -p /etc/yum.repos.d/backup
+            cp -f /etc/yum.repos.d/*.repo /etc/yum.repos.d/backup/ 2>/dev/null || true
+        fi
+        
+        # 替换为 vault 源
+        sed -i 's|^mirrorlist=|#mirrorlist=|g' /etc/yum.repos.d/CentOS-*.repo 2>/dev/null || true
+        sed -i 's|^#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*.repo 2>/dev/null || true
+        
+        log_success "CentOS 8 源地址已切换到 vault.centos.org"
+        
+    # CentOS 7
+    elif [ "$centos_version" = "7" ]; then
+        log_warning "检测到 CentOS 7，官方已停止维护，切换到 vault 源..."
+        
+        # 备份原有源
+        if [ ! -d /etc/yum.repos.d/backup ]; then
+            mkdir -p /etc/yum.repos.d/backup
+            cp -f /etc/yum.repos.d/*.repo /etc/yum.repos.d/backup/ 2>/dev/null || true
+        fi
+        
+        # 替换为 vault 源
+        sed -i 's|^mirrorlist=|#mirrorlist=|g' /etc/yum.repos.d/CentOS-*.repo 2>/dev/null || true
+        sed -i 's|^#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*.repo 2>/dev/null || true
+        
+        log_success "CentOS 7 源地址已切换到 vault.centos.org"
+    else
+        log_info "CentOS $centos_version 源地址无需修复"
+    fi
+    
+    # 清理缓存
+    if command -v dnf &> /dev/null; then
+        dnf clean all -q 2>/dev/null || true
+    else
+        yum clean all -q 2>/dev/null || true
+    fi
+}
+
 # 安装 Docker
 install_docker() {
     log_info "开始安装 Docker..."
@@ -108,6 +162,9 @@ install_docker() {
             
             ;;
         centos|rhel|fedora)
+            # 修复 CentOS 源地址（如果需要）
+            fix_centos_repo
+            
             # 检测包管理器
             if command -v dnf &> /dev/null; then
                 PKG_MANAGER="dnf"
