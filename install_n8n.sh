@@ -234,14 +234,16 @@ download_docker_compose_file() {
     local current_dir=$(pwd)
     local compose_file="$current_dir/docker-compose.yml"
     
-    log_info "下载 docker-compose.yml 文件..."
+    log_info "下载 docker-compose.yml 文件..." >&2
     
     if curl -fsSL https://raw.githubusercontent.com/xapanyun/n8n_install/main/docker-compose.yml -o "$compose_file"; then
-        log_success "docker-compose.yml 下载成功: $compose_file"
+
+        
+        log_success "docker-compose.yml 下载成功: $compose_file" >&2
         echo "$compose_file"
         return 0
     else
-        log_error "docker-compose.yml 下载失败"
+        log_error "docker-compose.yml 下载失败" >&2
         return 1
     fi
 }
