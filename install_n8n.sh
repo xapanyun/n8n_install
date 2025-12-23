@@ -340,6 +340,7 @@ run_n8n_with_docker() {
     docker run -d \
         --name n8n \
         -p 5678:5678 \
+        -e N8N_SECURE_COOKIE=false \
         -v n8n_data:/home/node/.n8n \
         --restart unless-stopped \
         docker.n8n.io/n8nio/n8n
