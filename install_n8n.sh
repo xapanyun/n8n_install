@@ -393,8 +393,10 @@ POSTGRES_PASSWORD=$postgres_password
 BASEROW_DB_PASSWORD=$baserow_db_password
 # BASEROW_PUBLIC_URL: Set to your actual access URL (IP or domain)
 # If accessing via IP, update this to: http://YOUR_IP:5080
-# Multiple URLs can be set using BASEROW_EXTRA_PUBLIC_URLS
 BASEROW_PUBLIC_URL=$baserow_public_url
+# BASEROW_EXTRA_PUBLIC_URLS: Allow internal Docker network access
+# This allows n8n to access Baserow via http://baserow:80
+BASEROW_EXTRA_PUBLIC_URLS=http://baserow:80
 
 # Redis Configuration
 REDIS_PASSWORD=$redis_password
