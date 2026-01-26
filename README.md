@@ -1,104 +1,105 @@
-# n8n 一键安装脚本
+# n8n One-Click Installation Script
 
-支持 Debian、Ubuntu、CentOS 等常见 Linux 系统的 n8n 自动化安装脚本，基于 Docker 安装。
+[中文](README_cn.md) | [English](README.md)
 
-## 系统要求
+Automated installation script for n8n on common Linux systems (Debian, Ubuntu, CentOS, etc.), based on Docker installation.
 
-- Linux 系统（Debian、Ubuntu、CentOS、RHEL、Fedora 等）
-- Root 权限（使用 sudo）
-- 网络连接
+## System Requirements
 
-## VPS 购买建议
+- Linux system (Debian, Ubuntu, CentOS, RHEL, Fedora, etc.)
+- Root privileges (using sudo)
+- Network connection
 
-### 推荐使用国外 VPS
+## VPS Purchase Recommendations
 
-由于 n8n 经常需要配置各种国外的 AI 服务（如 OpenAI、Anthropic、Google AI 等），建议购买国外 VPS 以获得更好的网络连接和稳定性。
+### Recommended: Use Overseas VPS
 
-### 推荐配置
+Since n8n often needs to configure various overseas AI services (such as OpenAI, Anthropic, Google AI, etc.), it is recommended to purchase an overseas VPS for better network connectivity and stability.
 
-**Bandwagon Host（搬瓦工）KVM VPS**
+### Recommended Configuration
 
-- **配置**：40G SSD / 2GB RAM / 3x CPU / 2TB 流量
-- **价格**：$99.99 USD/年（约 ¥700/年）
-- **优势**：
-  - 多数据中心可选
-  - 免费自动备份和快照
-  - 支持 CentOS、Debian、Ubuntu 等系统
-  - 99.95% 在线时间保证
-  - 适合运行 n8n 和连接国外 AI 服务
+**Bandwagon Host KVM VPS**
 
-**购买链接**：[点击购买](https://bandwagonhost.com/aff.php?aff=36396&pid=45)
+- **Configuration**: 40G SSD / 2GB RAM / 3x CPU / 2TB Traffic
+- **Price**: $99.99 USD/year (approximately ¥700/year)
+- **Advantages**:
+  - Multiple data centers available
+  - Free automatic backup and snapshots
+  - Supports CentOS, Debian, Ubuntu, and other systems
+  - 99.95% uptime guarantee
+  - Suitable for running n8n and connecting to overseas AI services
 
-> **提示**：选择 "40G KVM - PROMO VPS" 年度套餐，性价比最高。
+**Purchase Link**: [Click to Purchase](https://bandwagonhost.com/aff.php?aff=36396&pid=45)
 
-### 其他 VPS 选择
+> **Tip**: Choose the "40G KVM - PROMO VPS" annual plan for the best value.
 
-如果你已有其他 VPS 服务商，确保满足以下最低配置要求：
-- **CPU**：2 核心或以上
-- **内存**：2GB 或以上
-- **存储**：20GB 或以上
-- **带宽**：1Gbps
-- **操作系统**：Debian 11+ / Ubuntu 20.04+ / CentOS 8+
+### Other VPS Options
 
-## 快速安装
+If you already have another VPS provider, ensure it meets the following minimum configuration requirements:
+- **CPU**: 2 cores or more
+- **Memory**: 2GB or more
+- **Storage**: 20GB or more
+- **Bandwidth**: 1Gbps
+- **Operating System**: Debian 11+ / Ubuntu 20.04+ / CentOS 8+
 
+## Quick Installation
 
-### 使用说明
+### Usage Instructions
 
-**安装前准备：**
+**Pre-installation Preparation:**
 
-1. 创建 n8n 工作目录：
+1. Create n8n working directory:
 ```bash
 mkdir -p ~/n8n
 cd ~/n8n
 ```
 
-2. 执行安装命令：
+2. Execute installation command:
 ```bash
 curl -fsSL https://raw.githubusercontent.com/xapanyun/n8n_install/main/install_n8n.sh | sudo bash
 ```
 
-**安装过程：**
+**Installation Process:**
 
-- 脚本会自动检测操作系统并安装 Docker（如果未安装）
-- 如果当前目录包含 `docker-compose.yml`，会优先使用 Docker Compose 安装
-- 否则会使用 `docker run` 方式安装
-- 安装完成后，n8n 会在端口 5678 上运行
+- The script will automatically detect the operating system and install Docker (if not installed)
+- If the current directory contains `docker-compose.yml`, it will prioritize using Docker Compose for installation
+- Otherwise, it will use `docker run` for installation
+- After installation, n8n will run on port 5678
 
-## 功能特性
+## Features
 
-- ✅ 自动检测操作系统类型
-- ✅ 自动安装 Docker（如果未安装）
-- ✅ 支持使用 Docker Compose 或 Docker run
-- ✅ 自动创建数据卷
-- ✅ 设置语言环境，避免乱码
-- ✅ 自动清理旧容器
+- ✅ Automatic operating system detection
+- ✅ Automatic Docker installation (if not installed)
+- ✅ Support for Docker Compose or Docker run
+- ✅ Automatic data volume creation
+- ✅ Locale settings to avoid encoding issues
+- ✅ Automatic cleanup of old containers
 
-## 安装说明
+## Installation Instructions
 
-脚本会自动执行以下操作：
+The script will automatically perform the following operations:
 
-1. 检测操作系统类型（Debian/Ubuntu/CentOS 等）
-2. 检查并安装 Docker（如果未安装）
-3. 检查 Docker Compose 是否可用
-4. 查找并使用项目中的 `docker-compose.yml`（如果存在）
-5. 创建 n8n 数据卷
-6. 启动 n8n 容器
+1. Detect operating system type (Debian/Ubuntu/CentOS, etc.)
+2. Check and install Docker (if not installed)
+3. Check if Docker Compose is available
+4. Find and use the `docker-compose.yml` in the project (if it exists)
+5. Create n8n data volume
+6. Start n8n container
 
-## 访问 n8n
+## Accessing n8n
 
-安装完成后，访问以下地址：
+After installation, access n8n at the following addresses:
 
-- 本地访问：http://localhost:5678
-- 服务器 IP：http://YOUR_SERVER_IP:5678
+- Local access: http://localhost:5678
+- Server IP: http://YOUR_SERVER_IP:5678
 
-### 使用域名访问
+### Using Domain Name Access
 
-如果需要使用域名访问 n8n，可以通过以下方式配置：
+If you need to access n8n using a domain name, you can configure it in the following ways:
 
-#### 方式一：使用 Nginx 反向代理
+#### Method 1: Using Nginx Reverse Proxy
 
-1. 安装 Nginx（如果未安装）：
+1. Install Nginx (if not installed):
 ```bash
 # Ubuntu/Debian
 sudo apt-get update && sudo apt-get install -y nginx
@@ -107,12 +108,12 @@ sudo apt-get update && sudo apt-get install -y nginx
 sudo yum install -y nginx
 ```
 
-2. 创建 Nginx 配置文件：
+2. Create Nginx configuration file:
 ```bash
 sudo nano /etc/nginx/sites-available/n8n
 ```
 
-3. 添加以下配置（将 `your-domain.com` 替换为你的域名）：
+3. Add the following configuration (replace `your-domain.com` with your domain):
 ```nginx
 server {
     listen 80;
@@ -132,7 +133,7 @@ server {
 }
 ```
 
-4. 启用配置并重启 Nginx：
+4. Enable configuration and restart Nginx:
 ```bash
 # Ubuntu/Debian
 sudo ln -s /etc/nginx/sites-available/n8n /etc/nginx/sites-enabled/
@@ -145,24 +146,24 @@ sudo nginx -t
 sudo systemctl restart nginx
 ```
 
-5. 配置 SSL 证书（推荐使用 Let's Encrypt）：
+5. Configure SSL certificate (recommended: Let's Encrypt):
 ```bash
 sudo apt-get install -y certbot python3-certbot-nginx
 sudo certbot --nginx -d your-domain.com
 ```
 
-#### 方式二：使用 Cloudflare 反向代理
+#### Method 2: Using Cloudflare Reverse Proxy
 
-1. 在 Cloudflare 中添加你的域名和 DNS 记录：
-   - 添加 A 记录，指向你的服务器 IP 地址 
-   - 确保代理状态为"已代理"（橙色云朵图标）
+1. Add your domain and DNS records in Cloudflare:
+   - Add an A record pointing to your server IP address
+   - Ensure the proxy status is "Proxied" (orange cloud icon)
 
-2. 在服务器上配置 Nginx（监听 80 端口，不需要 SSL）：
+2. Configure Nginx on the server (listen on port 80, no SSL needed):
 ```bash
 sudo nano /etc/nginx/sites-available/n8n
 ```
 
-添加以下配置：
+Add the following configuration:
 ```nginx
 server {
     listen 80;
@@ -182,7 +183,7 @@ server {
 }
 ```
 
-启用配置并重启 Nginx：
+Enable configuration and restart Nginx:
 ```bash
 # Ubuntu/Debian
 sudo ln -s /etc/nginx/sites-available/n8n /etc/nginx/sites-enabled/
@@ -195,91 +196,90 @@ sudo nginx -t
 sudo systemctl restart nginx
 ```
 
-3. 配置 Cloudflare SSL/TLS：
-   - 登录 Cloudflare 控制台
-   - 进入 SSL/TLS 设置
-   - 选择"灵活"模式（Flexible）
-   - **注意**：由于服务器只监听 80 端口（HTTP），必须选择"灵活"模式。使用 Cloudflare 时，服务器端不需要安装 certbot，Cloudflare 会自动处理 SSL 加密
+3. Configure Cloudflare SSL/TLS:
+   - Log in to Cloudflare dashboard
+   - Go to SSL/TLS settings
+   - Select "Flexible" mode
+   - **Note**: Since the server only listens on port 80 (HTTP), you must select "Flexible" mode. When using Cloudflare, you don't need to install certbot on the server side, as Cloudflare will automatically handle SSL encryption
 
+**Notes:**
+- When using domain name access, ensure the domain DNS is correctly resolved to the server IP
+- Using the Nginx method requires configuring an SSL certificate (recommended: Let's Encrypt)
+- When using the Cloudflare method, the server only needs to listen on port 80, SSL is automatically handled by Cloudflare, no need to install certbot
+- If using Cloudflare, pay attention to Webhook URL configuration to ensure the correct domain is used
 
-**注意事项：**
-- 使用域名访问时，需要确保域名 DNS 已正确解析到服务器 IP
-- 使用 Nginx 方式需要配置 SSL 证书（推荐 Let's Encrypt）
-- 使用 Cloudflare 方式时，服务器只需监听 80 端口，SSL 由 Cloudflare 自动处理，无需安装 certbot
-- 如果使用 Cloudflare，注意 Webhook URL 配置，确保使用正确的域名
+## Common Commands
 
-## 常用命令
-
-### 使用 Docker Compose（如果使用 compose 安装）
+### Using Docker Compose (if installed with compose)
 
 ```bash
 cd /path/to/docker-compose.yml
-docker compose ps          # 查看容器状态
-docker compose logs -f     # 查看日志
-docker compose down        # 停止容器
-docker compose up -d       # 启动容器
-docker compose restart     # 重启容器
+docker compose ps          # View container status
+docker compose logs -f     # View logs
+docker compose down        # Stop containers
+docker compose up -d       # Start containers
+docker compose restart     # Restart containers
 ```
 
-### 使用 Docker run
+### Using Docker run
 
 ```bash
-docker ps | grep n8n       # 查看容器状态
-docker logs -f n8n         # 查看日志
-docker stop n8n            # 停止容器
-docker start n8n          # 启动容器
-docker restart n8n         # 重启容器
-docker stop n8n && docker rm n8n  # 删除容器
+docker ps | grep n8n       # View container status
+docker logs -f n8n         # View logs
+docker stop n8n            # Stop container
+docker start n8n          # Start container
+docker restart n8n         # Restart container
+docker stop n8n && docker rm n8n  # Remove container
 ```
 
-## 数据持久化
+## Data Persistence
 
-n8n 的数据存储在 Docker volume `n8n_data` 中，即使删除容器，数据也不会丢失。
+n8n data is stored in the Docker volume `n8n_data`, so data will not be lost even if the container is deleted.
 
-查看数据卷：
+View data volume:
 ```bash
 docker volume inspect n8n_data
 ```
 
-## 卸载
+## Uninstallation
 
-### 使用 Docker Compose
+### Using Docker Compose
 
 ```bash
 cd /path/to/docker-compose.yml
 docker compose down
-docker volume rm n8n_data  # 可选：删除数据卷
+docker volume rm n8n_data  # Optional: remove data volume
 ```
 
-### 使用 Docker run
+### Using Docker run
 
 ```bash
 docker stop n8n
 docker rm n8n
-docker volume rm n8n_data  # 可选：删除数据卷
+docker volume rm n8n_data  # Optional: remove data volume
 ```
 
-## 故障排查
+## Troubleshooting
 
-如果安装失败，请检查：
+If installation fails, please check:
 
-1. 是否有 root 权限
-2. 网络连接是否正常
-3. 端口 5678 是否被占用
-4. Docker 服务是否正常运行
+1. Whether you have root privileges
+2. Whether the network connection is normal
+3. Whether port 5678 is occupied
+4. Whether the Docker service is running normally
 
-查看容器日志：
+View container logs:
 ```bash
 docker logs n8n
 ```
 
-## 许可证
+## License
 
-本项目遵循与 n8n 相同的许可证。
+This project follows the same license as n8n.
 
-## 相关链接
+## Related Links
 
-- [n8n 官方文档](https://docs.n8n.io/)
+- [n8n Official Documentation](https://docs.n8n.io/)
 - [n8n GitHub](https://github.com/n8n-io/n8n)
-- [n8n 官网](https://n8n.io/)
+- [n8n Official Website](https://n8n.io/)
 
